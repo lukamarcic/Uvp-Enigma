@@ -61,13 +61,29 @@ rot3 = [25, 11, 15, 21, 0, 10, 20, 3, 24, 12, 13, 5, 1, 19, 23, 7, 18, 9, 22, 4,
 rot4 = [14, 20, 18, 25, 3, 17, 10, 13, 15, 24, 4, 6, 22, 1, 12, 23, 9, 21, 7, 5, 11, 8, 16, 2, 0, 19]
 rot5 = [13, 12, 18, 16, 7, 21, 5, 22, 19, 25, 24, 23, 4, 0, 3, 17, 14, 8, 6, 15, 1, 10, 2, 11, 20, 9]
 
-# definirajmo sedaj razred Rotor skupaj z nekimi osnovnimi funkcijami (prvo pa pomožna funkcija za indeks 1 do 26)
-#class Rotor:
-#
-#    def __init__(self, per, indeks):
-#        self.per = per
-#        self.per =
+# definirajmo sedaj razred Rotor skupaj z nekaj osnovnimi funkcijami
+class Rotor:
 
+    def __init__(self, per, pozicija):
+        self.per = per
+        self.poz = pozicija % 26
+    
+    def __str__(self):
+        return 'Rotor s permutacijo {0} in pozicijo {1}'.format(self.per, self.poz)
+
+    def __rept__(self):
+        return 'Rotor({0}, {1})'.format(self.per, self.poz)
+
+    def rotiraj(self):
+        return Rotor(self.per, (self.poz + 1) % 26)
+
+def kodiraj_rotor(x, rotor):
+    return rotor.per[(x + rotor.poz) % 26]
+
+def kodiraj_rotor_inverz(x, rotor):
+    inverz_permutacije = rotor.per.index(x)
+    return (inverz_permutacije - rotor.poz) % 26
+    
 
 # ko se črke trikrat permutira skozi rotorje, se zamenja v "zrcalu" in nato ponovno gre skozi rotorje
 # zrcalo je torej permutacija 26 črk z 13 različnimi transpozicijami
@@ -85,10 +101,7 @@ def preveri_zrcalo(per):
 # in še funkcija ki ustvari naključno zrcalo.
 # Tu bo treba biti rahlo bolj zvit, saj z povsem naključno generacijo ponavadi ne dobimo ustrezne permutacije
 def ustvari_zrcalo():
-    zrc = []
-    for i in range(26):
-        zrc.append(0)
-    
+    zrc = [0] * 26
     preostale_stevilke = identiteta.copy()
     while len(preostale_stevilke) > 0:
         x = random.choice(preostale_stevilke)
@@ -125,9 +138,7 @@ def preveri_plugboard(per):
 # verjetnost, da se 2 naključno izbrani številki povežeta je arbitrarno določena na 2/3
 
 def ustvari_plugboard():
-    pb = []
-    for i in range(26):
-        pb.append(0)
+    pb = [0] * 26
     indeks = [0, 1, 2]
     
     preostale_stevilke = identiteta.copy()
@@ -151,6 +162,7 @@ plugboard = [0, 23, 3, 2, 4, 17, 6, 11, 8, 13, 10, 7, 22, 9, 16, 19, 14, 5, 18, 
 def kodiraj_plugboard(x, pb = plugboard):
     return pb[x]
 
+
 # Funkciji ki preko seznama črk iz abecede spremenita črko v njeno zaporedno št v abecedi in obratno
 def crka_v_stevilko(crka):
     stevilka = list(string.ascii_lowercase).index(crka)
@@ -159,3 +171,4 @@ def crka_v_stevilko(crka):
 def stevilka_v_crko(stevilka):
     crka = list(string.ascii_lowercase)[stevilka]
     return crka
+
