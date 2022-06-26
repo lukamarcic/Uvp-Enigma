@@ -26,19 +26,19 @@ testno_besedilo = 'Jaz pišem besedilo s katerim bom \t preveril kaj dogaja 123:
 # Za kodiranje naša enigma potrebuje 3 rotorje, v vsakemu od katerega se črka spremeni v drugo črko
 # te rotorje bomo oblikovali kot razred
 # rotor je vresnici permutacija 26 črk angleške abecede brez negibnih točk
-# Posamezne črke bomo ponazorili z njihovo zaporedno številko v abecedi. c npr. bi bila 3
+# Posamezne črke bomo ponazorili z njihovo zaporedno številko v abecedi. a je 0, b je 1, c 2 itd.
 # sestavimo funkcijo, ki preveri, če je dan seznam prvih 26 številk res ustrezna permutacija
 # identiteta je, kot bi ime namigovalo, le urejen seznam številk 1 do 26
 
-identiteta = list(range(1,27))
+identiteta = list(range(26))
 
 def preveri_rotor(per):
     for i in range(len(per)):
-        if per.count(i + 1) != 1:
+        if per.count(i) != 1:
             return False
     
     for i in per:
-        if per.index(i) == i - 1:
+        if per.index(i) == i:
             return False
     
     return True
@@ -55,15 +55,18 @@ def ustvari_rotor():
 # v fizični obliki enigme so imeli dostop do petih rotorjev, iz katerih so izbrali 3 za posamezno kodiranje
 # ker nimam dostopa do informacije, kakše točne permutacije so bili te rotorji, jih bomo naključno generirali
 # zapišimo jih kot konstante
+rot1 = [9, 13, 7, 18, 25, 20, 3, 4, 2, 22, 23, 6, 1, 24, 16, 11, 5, 15, 12, 0, 19, 8, 14, 10, 17, 21]
+rot2 = [5, 17, 9, 7, 6, 18, 23, 0, 12, 13, 14, 10, 25, 24, 20, 8, 1, 3, 22, 11, 21, 19, 2, 15, 16, 4]
+rot3 = [25, 11, 15, 21, 0, 10, 20, 3, 24, 12, 13, 5, 1, 19, 23, 7, 18, 9, 22, 4, 16, 8, 6, 2, 14, 17]
+rot4 = [14, 20, 18, 25, 3, 17, 10, 13, 15, 24, 4, 6, 22, 1, 12, 23, 9, 21, 7, 5, 11, 8, 16, 2, 0, 19]
+rot5 = [13, 12, 18, 16, 7, 21, 5, 22, 19, 25, 24, 23, 4, 0, 3, 17, 14, 8, 6, 15, 1, 10, 2, 11, 20, 9]
 
-per1 = [7, 24, 18, 14, 15, 25, 9, 20, 10, 5, 13, 2, 1, 4, 12, 6, 3, 17, 11, 8, 19, 16, 26, 22, 21, 23]
-per2 = [4, 3, 21, 23, 20, 9, 2, 14, 18, 26, 8, 13, 6, 16, 24, 7, 22, 15, 12, 17, 19, 11, 25, 5, 10, 1]
-per3 = [17, 22, 6, 20, 4, 24, 3, 26, 13, 7, 15, 8, 12, 18, 23, 25, 10, 5, 14, 19, 11, 1, 9, 2, 21, 16]
-per4 = [24, 8, 2, 3, 19, 9, 17, 6, 5, 21, 23, 25, 14, 10, 26, 22, 11, 13, 12, 18, 7, 15, 16, 4, 1, 20]
-per5 = [2, 18, 19, 12, 24, 15, 3, 14, 1, 21, 22, 17, 5, 13, 20, 23, 25, 16, 6, 7, 11, 26, 9, 4, 10, 8]
-
-# definirajmo sedaj razred Rotor skupaj z nekimi osnovnimi funkcijami
-
+# definirajmo sedaj razred Rotor skupaj z nekimi osnovnimi funkcijami (prvo pa pomožna funkcija za indeks 1 do 26)
+#class Rotor:
+#
+#    def __init__(self, per, indeks):
+#        self.per = per
+#        self.per =
 
 
 # ko se črke trikrat permutira skozi rotorje, se zamenja v "zrcalu" in nato ponovno gre skozi rotorje
@@ -75,7 +78,7 @@ def preveri_zrcalo(per):
     if not preveri_rotor(per):
         return False
     for i in per:
-        if per[i - 1] != (per.index(i) + 1):
+        if per[i] != per.index(i):
             return False
     return True
 
@@ -92,17 +95,16 @@ def ustvari_zrcalo():
         preostale_stevilke.remove(x)
         y = random.choice(preostale_stevilke)
         preostale_stevilke.remove(y)
-        zrc[x - 1] = y
-        zrc[y - 1] = x
+        zrc[x] = y
+        zrc[y] = x
 
     return zrc
 
 # Konstantno zrcalo, ki ga bomo uporabljali je
-zrcalo = [4, 22, 25, 1, 18, 16, 9, 26, 7, 24, 21, 23, 17, 15, 14, 6, 13, 5, 20, 19, 11, 2, 12, 10, 3, 8]
-
+zrcalo = [8, 14, 25, 19, 10, 22, 9, 18, 0, 6, 4, 13, 16, 11, 1, 17, 12, 15, 7, 3, 23, 24, 5, 20, 21, 2]
 # definirajmo funkcijo, kaj se zgodi s številko, ko gre skozi zrcalo:
 def kodiraj_zrcalo(x, zrc = zrcalo):
-    return zrc[x - 1]
+    return zrc[x]
 
 
 # Zadnja stvar, ki jo potrebujemo za uspešno kodiranje, je plugboard
@@ -111,10 +113,10 @@ def kodiraj_zrcalo(x, zrc = zrcalo):
 
 def preveri_plugboard(per):
     for i in range(26):
-        if per.count(i + 1) != 1:
+        if per.count(i) != 1:
             return False
     for i in per:
-        if (not (per.index(i) == i - 1)) and per[i - 1] != (per.index(i) + 1):
+        if (not (per.index(i) == i)) and per[i] != (per.index(i)):
             return False
     return True
 
@@ -136,22 +138,24 @@ def ustvari_plugboard():
         preostale_stevilke.remove(y)
         ran = random.choice(indeks)
         if ran == 0:
-            pb[x - 1] = x
-            pb[y - 1] = y
+            pb[x] = x
+            pb[y] = y
         else:
-            pb[x - 1] = y
-            pb[y - 1] = x
+            pb[x] = y
+            pb[y] = x
 
     return pb
 
-plugboard = [10, 2, 23, 19, 9, 8, 7, 6, 5, 1, 12, 11, 13, 24, 15, 16, 17, 18, 4, 20, 21, 22, 3, 14, 25, 26]
+plugboard = [0, 23, 3, 2, 4, 17, 6, 11, 8, 13, 10, 7, 22, 9, 16, 19, 14, 5, 18, 15, 20, 21, 12, 1, 24, 25]
 
+def kodiraj_plugboard(x, pb = plugboard):
+    return pb[x]
 
 # Funkciji ki preko seznama črk iz abecede spremenita črko v njeno zaporedno št v abecedi in obratno
 def crka_v_stevilko(crka):
-    stevilka = list(string.ascii_lowercase).index(crka) + 1
+    stevilka = list(string.ascii_lowercase).index(crka)
     return stevilka
 
 def stevilka_v_crko(stevilka):
-    crka = list(string.ascii_lowercase)[stevilka - 1]
+    crka = list(string.ascii_lowercase)[stevilka]
     return crka
