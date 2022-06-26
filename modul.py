@@ -32,20 +32,19 @@ testno_besedilo = 'Jaz pišem besedilo s katerim bom \t preveril kaj dogaja 123:
 
 identiteta = list(range(1,27))
 
-def preveri_rotor(sez):
-    if len(sez) != 26:
-        return False
-    
-    for i in sez:
-        if i not in identiteta:
+def preveri_rotor(per):
+    for i in range(len(per)):
+        if per.count(i + 1) != 1:
             return False
-        if sez.index(i) == identiteta.index(i):
+    
+    for i in per:
+        if per.index(i) == i - 1:
             return False
     
     return True
 
 
-# še funkcija, ki nam sestavi naključni rotor (potrebno import random)
+# še funkcija, ki nam sestavi naključno permutacijo za rotor (potrebno import random)
 def ustvari_rotor():
     rotor = random.sample(identiteta, len(identiteta))
     if preveri_rotor(rotor):
@@ -65,25 +64,6 @@ per5 = [2, 18, 19, 12, 24, 15, 3, 14, 1, 21, 22, 17, 5, 13, 20, 23, 25, 16, 6, 7
 
 # definirajmo sedaj razred Rotor skupaj z nekimi osnovnimi funkcijami
 
-class Rotor:
-    
-    def __init__(self, permutacija, pozicija):
-        self.perm = permutacija
-        self.poz = (pozicija % 26) + 1
-
-    def __str__(self):
-        return 'Rotor z permutacijo: {0} in pozicijo: {1}'.format(self.perm, self.poz)
-    
-    def __repr__(self):
-        return 'Rotor({0}, {1})'.format(self.perm, self.poz)
-    
-    def rotiraj(self):
-        i = self.poz
-        if i != 26:
-            i += 1
-        else:
-            i = 1
-        return 'Rotor({0}, {1})'.format(self.perm, i)
 
 
 # ko se črke trikrat permutira skozi rotorje, se zamenja v "zrcalu" in nato ponovno gre skozi rotorje
@@ -102,9 +82,9 @@ def preveri_zrcalo(per):
 # in še funkcija ki ustvari naključno zrcalo.
 # Tu bo treba biti rahlo bolj zvit, saj z povsem naključno generacijo ponavadi ne dobimo ustrezne permutacije
 def ustvari_zrcalo():
-    zrcalo = []
+    zrc = []
     for i in range(26):
-        zrcalo.append(0)
+        zrc.append(0)
     
     preostale_stevilke = identiteta.copy()
     while len(preostale_stevilke) > 0:
@@ -112,14 +92,59 @@ def ustvari_zrcalo():
         preostale_stevilke.remove(x)
         y = random.choice(preostale_stevilke)
         preostale_stevilke.remove(y)
-        zrcalo[x - 1] = y
-        zrcalo[y - 1] = x
+        zrc[x - 1] = y
+        zrc[y - 1] = x
 
-    return zrcalo
+    return zrc
 
 # Konstantno zrcalo, ki ga bomo uporabljali je
 zrcalo = [4, 22, 25, 1, 18, 16, 9, 26, 7, 24, 21, 23, 17, 15, 14, 6, 13, 5, 20, 19, 11, 2, 12, 10, 3, 8]
 
+# definirajmo funkcijo, kaj se zgodi s številko, ko gre skozi zrcalo:
+def kodiraj_zrcalo(x, zrc = zrcalo):
+    return zrc[x - 1]
+
+
+# Zadnja stvar, ki jo potrebujemo za uspešno kodiranje, je plugboard
+# plugboard omogoča nastavitve, da povežemo 2 črki, ki se potem zamenjate preden in/ali po tem, ko črka pride iz rotorjev
+# plugboard je torej sestavljen iz 1 do 13 permutacij črk
+
+def preveri_plugboard(per):
+    for i in range(26):
+        if per.count(i + 1) != 1:
+            return False
+    for i in per:
+        if (not (per.index(i) == i - 1)) and per[i - 1] != (per.index(i) + 1):
+            return False
+    return True
+
+
+# definiramo funkcijo, ki nam ustvari naključen plugboard.
+# verjetnost, da se 2 naključno izbrani številki povežeta je arbitrarno določena na 2/3
+
+def ustvari_plugboard():
+    pb = []
+    for i in range(26):
+        pb.append(0)
+    indeks = [0, 1, 2]
+    
+    preostale_stevilke = identiteta.copy()
+    while len(preostale_stevilke) > 0:
+        x = random.choice(preostale_stevilke)
+        preostale_stevilke.remove(x)
+        y = random.choice(preostale_stevilke)
+        preostale_stevilke.remove(y)
+        ran = random.choice(indeks)
+        if ran == 0:
+            pb[x - 1] = x
+            pb[y - 1] = y
+        else:
+            pb[x - 1] = y
+            pb[y - 1] = x
+
+    return pb
+
+plugboard = [10, 2, 23, 19, 9, 8, 7, 6, 5, 1, 12, 11, 13, 24, 15, 16, 17, 18, 4, 20, 21, 22, 3, 14, 25, 26]
 
 
 # Funkciji ki preko seznama črk iz abecede spremenita črko v njeno zaporedno št v abecedi in obratno
