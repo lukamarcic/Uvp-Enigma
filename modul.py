@@ -55,11 +55,11 @@ def ustvari_rotor():
 # v fizični obliki enigme so imeli dostop do petih rotorjev, iz katerih so izbrali 3 za posamezno kodiranje
 # ker nimam dostopa do informacije, kakše točne permutacije so bili te rotorji, jih bomo naključno generirali
 # zapišimo jih kot konstante
-rot1 = [9, 13, 7, 18, 25, 20, 3, 4, 2, 22, 23, 6, 1, 24, 16, 11, 5, 15, 12, 0, 19, 8, 14, 10, 17, 21]
-rot2 = [5, 17, 9, 7, 6, 18, 23, 0, 12, 13, 14, 10, 25, 24, 20, 8, 1, 3, 22, 11, 21, 19, 2, 15, 16, 4]
-rot3 = [25, 11, 15, 21, 0, 10, 20, 3, 24, 12, 13, 5, 1, 19, 23, 7, 18, 9, 22, 4, 16, 8, 6, 2, 14, 17]
-rot4 = [14, 20, 18, 25, 3, 17, 10, 13, 15, 24, 4, 6, 22, 1, 12, 23, 9, 21, 7, 5, 11, 8, 16, 2, 0, 19]
-rot5 = [13, 12, 18, 16, 7, 21, 5, 22, 19, 25, 24, 23, 4, 0, 3, 17, 14, 8, 6, 15, 1, 10, 2, 11, 20, 9]
+per1 = [9, 13, 7, 18, 25, 20, 3, 4, 2, 22, 23, 6, 1, 24, 16, 11, 5, 15, 12, 0, 19, 8, 14, 10, 17, 21]
+per2 = [5, 17, 9, 7, 6, 18, 23, 0, 12, 13, 14, 10, 25, 24, 20, 8, 1, 3, 22, 11, 21, 19, 2, 15, 16, 4]
+per3 = [25, 11, 15, 21, 0, 10, 20, 3, 24, 12, 13, 5, 1, 19, 23, 7, 18, 9, 22, 4, 16, 8, 6, 2, 14, 17]
+per4 = [14, 20, 18, 25, 3, 17, 10, 13, 15, 24, 4, 6, 22, 1, 12, 23, 9, 21, 7, 5, 11, 8, 16, 2, 0, 19]
+per5 = [13, 12, 18, 16, 7, 21, 5, 22, 19, 25, 24, 23, 4, 0, 3, 17, 14, 8, 6, 15, 1, 10, 2, 11, 20, 9]
 
 # definirajmo sedaj razred Rotor skupaj z nekaj osnovnimi funkcijami
 class Rotor:
@@ -83,6 +83,8 @@ def kodiraj_rotor(x, rotor):
 def kodiraj_rotor_inverz(x, rotor):
     inverz_permutacije = rotor.per.index(x)
     return (inverz_permutacije - rotor.poz) % 26
+
+testni_rotor = Rotor(per3, 24)
     
 
 # ko se črke trikrat permutira skozi rotorje, se zamenja v "zrcalu" in nato ponovno gre skozi rotorje
@@ -163,6 +165,30 @@ def kodiraj_plugboard(x, pb = plugboard):
     return pb[x]
 
 
+class Koda:
+
+    def __init__(self, rot1, rot2, rot3, pb = plugboard,  zrc = zrcalo):
+        self.rot1 = rot1
+        self.rot2 = rot2
+        self.rot3 = rot3
+        self.zrc = zrc
+        self.pb = pb
+    
+    def __str__(self):
+        x1 = self.rot1
+        x2 = self.rot2
+        x3 = self.rot3
+        return 'Koda:\n\trotorji: {0}, {1}, {2}\n\tplugboard: {3}\n\tzrcalo:{4}'.format(x1, x2, x3, self.pb, self.zrc)
+
+    def spremeni(self):
+        if self.rot1.poz == 25:
+            if self.rot2.poz == 25:
+                return Koda(self.rot1.rotiraj(), self.rot2.rotiraj(), self.rot3.rotiraj(), self.pb, self.zrc)
+            return Koda(self.rot1.rotiraj(), self.rot2.rotiraj(), self.rot3, self.pb, self.zrc)
+        return Koda(self.rot1.rotiraj(), self.rot2, self.rot3, self.pb, self.zrc)
+
+
+
 # Funkciji ki preko seznama črk iz abecede spremenita črko v njeno zaporedno št v abecedi in obratno
 def crka_v_stevilko(crka):
     stevilka = list(string.ascii_lowercase).index(crka)
@@ -172,3 +198,44 @@ def stevilka_v_crko(stevilka):
     crka = list(string.ascii_lowercase)[stevilka]
     return crka
 
+def kodiraj_crko(crka, koda):
+    # Črko najprej spremenimo v številko
+    x0 = crka_v_stevilko(crka)
+    # Potem številko pošlemo skozi plugboard
+    x1 = kodiraj_plugboard(x0, koda.pb)
+    # Nato skozi vse 3 rotorje
+    x2 = kodiraj_rotor(x1, koda.rot1)
+    x3 = kodiraj_rotor(x2, koda.rot2)
+    x4 = kodiraj_rotor(x3, koda.rot3)
+    # Skozi zrcalo
+    x5 = kodiraj_zrcalo(x4, koda.zrc)
+    # Nazaj skozi rotorje
+    x6 = kodiraj_rotor_inverz(x5, koda.rot3)
+    x7 = kodiraj_rotor_inverz(x6, koda.rot2)
+    x8 = kodiraj_rotor_inverz(x7, koda.rot1)
+    # In še enkrat skozi plugboard
+    x9 = kodiraj_plugboard(x8, koda.pb)
+    # Številka se tako spremeni 7-9 krat, odvisno od plugboard nastavitev
+    # Sedaj številko spremenimo nazaj v črko
+    return stevilka_v_crko(x9)
+
+testna_koda1 = Koda(Rotor(per1, 25), Rotor(per2, 77), Rotor(per5, 4), plugboard, zrcalo)
+testna_koda2 = Koda(Rotor(per1, 25), Rotor(per2, 77), Rotor(per5, 8), plugboard, zrcalo)
+
+print(uredi_besedilo(testno_besedilo))
+
+def kodiraj_besedilo(besedilo, koda):
+    urejeno_besedilo = uredi_besedilo(besedilo)
+    kodirano_besedilo = ''
+    for znak in urejeno_besedilo:
+        if znak == ' ':
+            kodirano_besedilo += znak
+        else:
+            kodirano_besedilo += kodiraj_crko(znak, koda)
+            koda = koda.spremeni()
+    return kodirano_besedilo
+
+kodiran_test = kodiraj_besedilo(testno_besedilo, testna_koda1)
+print(kodiran_test)
+
+print(kodiraj_besedilo(kodiran_test, testna_koda1))
