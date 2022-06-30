@@ -1,7 +1,5 @@
 import string
 import random
-from tkinter import Y
-
 
 # Enigmo sestavljajo trije ključni deli: plugboard, rotorji in "zrcalo"
 # Mehanično je delovala tako, da se je ob pritisku na tipko sklenil električni tok
