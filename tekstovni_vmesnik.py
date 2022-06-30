@@ -2,8 +2,7 @@ import model
 
 # Funkcij za nastavitev zrcala
 def nastavi_zrcalo():
-    x = input('Za kodiranje potrebujemo določiti t.i. "zrcalo" \n'
-                'Zrcalo je permutacija 26 znakov, zapisana kot seznam številk 0 - 25 \n'
+    x = input(  'Zrcalo je permutacija 26 znakov, zapisana kot seznam številk 0 - 25 \n'
                 'Permutacija paroma zamenja črke (številke)\n'
                 'Torej gre za produkt 13 disjunktnih transpozicij \n'
                 'Na voljo imamo tri opcije: \n'
@@ -122,11 +121,10 @@ def nastavi_rotor():
 
 # Funkcija za nastavitev vseh treh rotorjev
 def nastavi_rotorje():
-    print('Za kodiranje potrebujemo določiti rotorje \n'
-            'Rotor je permutacija 26 znakov, zapisana kot seznam številk 0 - 25 \n'
+    print('Rotor je permutacija 26 znakov, zapisana kot seznam številk 0 - 25 \n'
             'Rotor vsako črko spremeni v neko drugo črko\n'
             'Torej gre za permutacijo brez fiksih točk \n'
-            'Rotor lahko potem še poljubno obrnemo na eno izmed 26 pozicij (označeno z 0-25)\n')
+            'Rotor lahko potem še poljubno obrnemo na eno izmed 26 pozicij (označeno z 0-25)')
     print('Prosim določite prvi rotor in njegovo začetno pozicijo')
     rotor1 = nastavi_rotor()
     print('Prosim določite drugi rotor in njegovo začetno pozicijo')
@@ -137,8 +135,7 @@ def nastavi_rotorje():
 
 # Funkcija za nastavitev plugboarda
 def nastavi_plugboard():
-    x = input('Za konec potrebujemo določiti še plugboard \n'
-                'Tudi plugboard je permutacija 26 znakov, zapisana kot seznam številk 0 - 25 \n'
+    x = input('Tudi plugboard je permutacija 26 znakov, zapisana kot seznam številk 0 - 25 \n'
                 'Permutacija paroma zamenja črke (številke) ali pa jih pusti na miru \n'
                 'Torej gre za produkt 1 - 13 disjunktnih transpozicij, drugje pa je identiteta'
                 'Spet imamo na voljo tri opcije: \n'
@@ -169,3 +166,18 @@ def nastavi_plugboard():
     else:
         print('Odgovor je lahko le oblike "a", "b" ali "c". Prosim, poskusite ponovno')
         return nastavi_plugboard()
+
+# Funkcija za nastavitev začetne kode
+def nastavi_kodo():
+    print('Za kodiranje potrebujemo določiti začetno pozicijo naše enigme')
+    print('Najprej določimo t.i. "zrcalo"')
+    zrc = nastavi_zrcalo()
+    print('Nadaljno moramo določiti rotorje')
+    rotorji = nastavi_rotorje()
+    print('Za konec potrebujemo določiti še plugboard')
+    pb = nastavi_plugboard()
+    print('Odlično! Sedaj imamo začetno pozicijo naše kode')
+    koda = model.Koda(rotorji[0], rotorji[1], rotorji[2], pb, zrc)
+    print('Spodaj je izpisana koda. Zapišite si jo, če želite sporočilo kdaj v prihodnosti dekodirati\n')
+    print(koda)
+    return koda

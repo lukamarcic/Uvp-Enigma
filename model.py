@@ -184,7 +184,13 @@ class Koda:
         x1 = self.rot1
         x2 = self.rot2
         x3 = self.rot3
-        return 'Koda:\nrotorji: {0}, {1}, {2}\nplugboard: {3}\nzrcalo:{4}'.format(x1, x2, x3, self.pb, self.zrc)
+        return ('Koda:\n'
+                    'rotorji:\n'
+                    '\t{0}\n'
+                    '\t{1}\n'
+                    '\t{2}\n'
+                    'plugboard: {3}\n'
+                    'zrcalo:{4}').format(x1, x2, x3, self.pb, self.zrc)
 # Kot sem že prej omenil, se po vsaki črki rotorji obrnejo, tako da se koda spremeni
 # Obrnejo se po naslednjem pravilu:
 #   - 1. rotor se vedno obrne
