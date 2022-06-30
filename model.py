@@ -1,5 +1,6 @@
 import string
 import random
+from tkinter import Y
 
 
 # Enigmo sestavljajo trije ključni deli: plugboard, rotorji in "zrcalo"
