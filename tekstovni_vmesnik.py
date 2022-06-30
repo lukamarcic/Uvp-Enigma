@@ -18,7 +18,7 @@ def nastavi_zrcalo():
         print(zrc)
         return zrc
     elif x.lower() == 'c':
-        y = input('Vnesite zrcalo kot ustrezen seznam [a1, ... , a25]')
+        y = input('Vnesite zrcalo kot ustrezen seznam [a1, ... , a25]:\t')
         y1 = y.lstrip('[').rstrip(']').replace(' ', '').split(',')
         if all(i.isnumeric() for i in y1):
             y2 = list(map(int, y1))
@@ -97,7 +97,7 @@ def nastavi_rotor():
             return nastavi_rotor()
     
     elif x.lower() == 'c':
-        y = input('Vnesite primerno permutacijo kot seznam [a1, ... , an]:')
+        y = input('Vnesite primerno permutacijo kot seznam [a1, ... , an]:\t')
         y1 = y.lstrip('[').rstrip(']').replace(' ', '').split(',')
         if all(i.isnumeric() for i in y1):
             y2 = list(map(int, y1))
@@ -151,7 +151,7 @@ def nastavi_plugboard():
         print(pb)
         return pb
     elif x.lower() == 'c':
-        y = input('Vnesite plugboard kot ustrezen seznam [a1, ... , a25]')
+        y = input('Vnesite plugboard kot ustrezen seznam [a1, ... , a25]:\t')
         y1 = y.lstrip('[').rstrip(']').replace(' ', '').split(',')
         if all(i.isnumeric() for i in y1):
             y2 = list(map(int, y1))
@@ -181,3 +181,54 @@ def nastavi_kodo():
     print('Spodaj je izpisana koda. Zapišite si jo, če želite sporočilo kdaj v prihodnosti dekodirati\n')
     print(koda)
     return koda
+
+# Funkcija za vnos besedila
+def vnos_besedila():
+    besedilo = input('Prosim, vnesite besedilo, ki bi ga radi kodirali:\t')
+    print('Ker enigma deluje kot permutiranje črk, bomo besedilo malo spremenili:\n'
+            '\t-Šumnike bomo spremenili v črke brez strešice (č -> c, š -> s, ž -> z)\n'
+            '\t-Vse črke bomo spremenili v male črke\n'
+            '\t-Vse preostale znake, ki niso v angleški abecedi, bomo odstranili')
+    print('Spremenjeno besedilo, ki ga bomo kodirali, je:')
+    urejeno_besedilo = model.uredi_besedilo(besedilo)
+    print(urejeno_besedilo)
+    x = input('Ste z besedilom zadovoljni? (J/N):')
+    if x.lower() == 'j':
+        return urejeno_besedilo
+    else:
+        print('Potem prosim ponovno vnesite besedilo, ki bi ga radi kodirali:')
+        return vnos_besedila()
+
+# Funkcija za kodiranje besedila
+def kodiraj():
+    koda = nastavi_kodo()
+    besedilo = vnos_besedila()
+    kodirano_besedilo = model.kodiraj_besedilo(besedilo, koda)
+    return(kodirano_besedilo)
+
+# Naš program enigma
+def enigma():
+    print('Pozdravljeni v program "Enigma"\n'
+            'V programu lahko prostovoljno kodirate besedilo, kot bi to storil slaven stroj iz 2. svetovne vojne\n'
+            'Če želite besedilo dekodirati, ga morate le ponovno kodirati z istimi nastavitvami za kodo\n')
+    vprasanje = input('Kaj bi zeleli storiti?\n'
+                        '\t (a): Kodirati/dekodirati besedilo\n'
+                        '\t (b): Zanima me, kako deluje enigma\n'
+                        'Prosim izberite črko pred ustrezno izbiro (a/b):')
+    if vprasanje.lower() == 'a':
+        print('Sledite navodilom in kodirajte besedilo')
+        kodirano_besedilo = kodiraj()
+        print('Vaše kodirano besedilo je:\n')
+        print(kodirano_besedilo)
+        x = input('Bi želeli v programu storiti še kaj? (J/N):')
+        if x.lower() == 'n':
+            pass
+        else:
+            return enigma()
+    if vprasanje.lower() == 'b':
+        pass
+    else:
+        print('Vašega vnosa žal nisem razumel. Prosim, poskusite ponovno')
+        return enigma()
+
+enigma()
