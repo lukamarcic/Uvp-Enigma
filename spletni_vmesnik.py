@@ -1,4 +1,5 @@
 import bottle
+import model
 
 @bottle.get('/')
 def osnovni_zaslon():

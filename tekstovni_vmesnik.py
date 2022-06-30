@@ -261,4 +261,4 @@ def enigma():
         print('Vašega vnosa žal nisem razumel. Prosim, poskusite ponovno')
         return enigma()
 
-enigma()
+#enigma()
