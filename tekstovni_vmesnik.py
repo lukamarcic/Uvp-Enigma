@@ -250,7 +250,7 @@ def enigma():
         print(kodirano_besedilo)
         x = input('Bi želeli v programu storiti še kaj? (J/N):')
         if x.lower() == 'n':
-            pass
+            return None
         else:
             return enigma()
     if vprasanje.lower() == 'b':
