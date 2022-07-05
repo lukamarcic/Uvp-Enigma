@@ -67,24 +67,27 @@ class Rotor:
 
 # Po tem, ko enigma kodira posamezno črko, se rotorji obrnejo, tako da za naslednjo črko koda ne ostane ista
 # Ta obrat bomo simulirali z zamikom, ki smo ga definirali preko argumenta pozicija
-
     def rotiraj(self):
         return Rotor(self.per, (self.poz + 1) % 26)
 
-# Potrebujemo še 2 funkciji, ki permutirata dano črko (številko) glede na lastnosti našega rotorja
-# prva funkcija ustreza permutaciji, ko gre črko skozi rotor, druga pa obratni smeri
-def kodiraj_rotor(x, rotor):
-    return rotor.per[(x + rotor.poz) % 26]
+# Funkcija, ki nam da rotor z inverzno permutacijo prvotnega rotorja
+# Funkcijo bomo potrebovali, ko pošljemo črko nazaj skozi rotor
+    def inverz(self):
+        inverz = [0] * 26
+        for i in self.per:
+            inverz[i] = self.per.index(i)
+        return Rotor(inverz, self.poz)
 
-def kodiraj_rotor_inverz(x, rotor):
-    inverz_permutacije = rotor.per.index(x)
-    return (inverz_permutacije - rotor.poz) % 26
+# Potrebujemo še funkcijo, ki permutira dano črko (številko) ko ta gre skozi rotor
+# Če je rotor obrnjen (ni na opziciji 0) se črka x permutira za enak faktor, kot bi se permutirala črka x + poz
+def kodiraj_rotor(x, rotor):
+    y = rotor.per[(x + rotor.poz) % 26]
+    return (y - rotor.poz) % 26
     
-# Ko se črke trikrat permutira v rotorjih, se zamenja v "zrcalu" in nato ponovno gre skozi rotorje
+# Ko se črka trikrat permutira v rotorjih, se zamenja v "zrcalu" in nato ponovno gre skozi rotorje
 # Zrcalo je torej permutacija 26 črk z 13 različnimi transpozicijami
 # Kot za rotor, ustvarimo funkcijo, ki preveri če permutacija primerna
 # Za razliko od rotorjev, ki se, kot bi ime namigovalo, po vsaki črki obrnejo, je zrcalo konstantno
-
 def preveri_zrcalo(per):
     if not preveri_rotor(per):
         return False
@@ -95,7 +98,6 @@ def preveri_zrcalo(per):
 
 # In še funkcija ki ustvari naključno zrcalo.
 # Tu bo treba biti rahlo bolj zvit, saj z povsem naključno generacijo ponavadi ne dobimo ustrezne permutacije
-
 def ustvari_zrcalo():
     zrc = [0] * 26
     preostale_stevilke = identiteta.copy()
@@ -121,7 +123,6 @@ def kodiraj_zrcalo(x, zrc = zrcalo):
 # Plugboard omogoča nastavitve, da povežemo 2 črki, ki se potem zamenjate preden in/ali po tem, ko črka pride iz rotorjev
 # Plugboard je torej sestavljen iz 1 do 13 transpozicij črk, na ostalih črkah pa je identiteta
 # Ponovno sestavimo funkcijo, ki preveri, če je permutacija ustrezna
-
 def preveri_plugboard(per):
     for i in range(26):
         if per.count(i) != 1:
@@ -134,7 +135,6 @@ def preveri_plugboard(per):
 
 # Definiramo funkcijo, ki nam ustvari naključen plugboard.
 # Verjetnost, da se 2 naključno izbrani številki povežeta je arbitrarno določena na 2/3. Lahko bi bila karkoli
-
 def ustvari_plugboard():
     pb = [0] * 26
     indeks = [0, 1, 2]
@@ -168,7 +168,6 @@ def kodiraj_plugboard(x, pb = plugboard):
 # 2. del:
 
 # Definirajmo razred "Koda", ki vsebuje 3 rotorje v določenem vrstnem redu, plugboard in zrcalo
-
 class Koda:
 
     def __init__(self, rot1, rot2, rot3, pb = plugboard,  zrc = zrcalo):
@@ -211,7 +210,6 @@ class Koda:
 # Presledke pusti pri miru, če nastane več zaporednih presledkov jih spremeni v enega
 # Šumnike spremeni v črke brez strešice. Ostale črke (npr ć, đ) izbriše
 # Za angleško abecedo importamo string
-
 def uredi_besedilo(tekst):
     delno_urejen1 = tekst.lower().replace('č', 'c').replace('š', 's').replace('ž', 'z')
     delno_urejen2 = ''
@@ -237,7 +235,6 @@ def stevilka_v_crko(stevilka):
 # Funkcija, ki kodira posamezno črko glede na nastavitev kode
 # Funkcija je vresnici zmnožek permutacij črk: na koncu dobimo transpozicije
 # Funkcija je torej sam svoj inver: če iz kodirane črke želimo originalno, jo le vstavimo pod istimi pogoji
-
 def kodiraj_crko(crka, koda):
     # Črko najprej spremenimo v številko
     x0 = crka_v_stevilko(crka)
@@ -250,9 +247,9 @@ def kodiraj_crko(crka, koda):
     # Skozi zrcalo
     x5 = kodiraj_zrcalo(x4, koda.zrc)
     # Nazaj skozi rotorje
-    x6 = kodiraj_rotor_inverz(x5, koda.rot3)
-    x7 = kodiraj_rotor_inverz(x6, koda.rot2)
-    x8 = kodiraj_rotor_inverz(x7, koda.rot1)
+    x6 = kodiraj_rotor(x5, koda.rot3.inverz())
+    x7 = kodiraj_rotor(x6, koda.rot2.inverz())
+    x8 = kodiraj_rotor(x7, koda.rot1.inverz())
     # In še enkrat skozi plugboard (spet, morda se spremeni morda ne)
     x9 = kodiraj_plugboard(x8, koda.pb)
     # Številka se tako spremeni 7 do 9 krat, odvisno od plugboard nastavitev
@@ -264,8 +261,6 @@ def kodiraj_crko(crka, koda):
 # Nato gre čez vse znake urejenega besedila:
 # Če je znak presledek, ga pusti pri miru
 # Če pa je znak črka, jo kodira preko funkcije kodiraj_crko, nato pa ustrezno spremeni kodo
-
-
 def kodiraj_besedilo(besedilo, koda):
     urejeno_besedilo = uredi_besedilo(besedilo)
     kodirano_besedilo = ''
