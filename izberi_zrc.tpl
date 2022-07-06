@@ -2,7 +2,7 @@
 <p>
     Za kodiranje potrebujemo določiti začetno pozicijo naše enigme. <br><br>
 
-    <form action="/izberi_rot/">
+    <form action="/izberi_zrc/">
         <h2>Zrcalo</h2>
         Najprej določimo t.i. "zrcalo": <br>
         Zrcalo je permutacija 26 znakov, zapisana kot seznam številk 0 - 25, ki paroma zamenja črke (številke). <br>

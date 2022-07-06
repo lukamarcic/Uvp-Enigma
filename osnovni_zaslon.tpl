@@ -9,7 +9,7 @@
     (b): Zanima me, kako deluje enigma<br>
     <br>
 
-    <form action="/izberi_zrc/">
+    <form action="/izberi/">
         <input type="submit" value="a">
         <input type="button" onclick="alert('{{sporocilo}}')" value="b">
     </form>
