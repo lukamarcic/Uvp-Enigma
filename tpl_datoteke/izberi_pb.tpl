@@ -1,4 +1,4 @@
-% rebase('osnova.tpl')
+% rebase('tpl_datoteke\osnova.tpl')
 <p>
     Za kodiranje potrebujemo določiti začetno pozicijo naše enigme. <br><br>
     Izbran tretji rotor je: {{rot3}}

@@ -1,4 +1,4 @@
-% rebase('osnova.tpl')
+% rebase('tpl_datoteke\osnova.tpl')
 <p> 
     Pozdravljeni v program "Enigma".<br>
     V programu lahko prostovoljno kodirate besedilo, kot bi to storil slaven stroj iz 2. svetovne vojne.<br>

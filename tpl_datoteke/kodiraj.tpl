@@ -1,4 +1,4 @@
-% rebase('osnova.tpl')
+% rebase('tpl_datoteke\osnova.tpl')
 <p>
     Izbrali ste naslednjo kodo:<br>
     Zrcalo: {{zrc}}<br>

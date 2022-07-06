@@ -1,4 +1,4 @@
-% rebase('osnova.tpl')
+% rebase('tpl_datoteke\osnova.tpl')
 <p>
     Izbran plugboard je: {{pb}}<br><br>
     Za konec potrebujemo še besedilo za kodiranje.<br>

@@ -1,4 +1,4 @@
-% rebase('osnova.tpl')
+% rebase('tpl_datoteke\osnova.tpl')
 <p>
     Vaše kodirano besedilo je:<br><br>
     {{tekst}}
