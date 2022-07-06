@@ -2,8 +2,8 @@
 <p>
     Za kodiranje potrebujemo določiti začetno pozicijo naše enigme. <br><br>
     Izbran prvi rotor je: {{rot1}}
-    <br>
-    prosim določite drugi rotor:<br>
+    <br><br>
+    prosim določite drugi rotor:<br>   
 
     <form action="/izberi_rot_2/">
                 

@@ -23,7 +23,7 @@
     <form action="/izberi_rot_1/">
         
         
-        <input type="radio" id="a_rot1" name="izberi_rotor1" value="a">
+        <input type="radio" id="a_rot1" name="izberi_rotor1" value="a_rot1">
         <label for="a_rot1">(a)</label>
         <select id="a_rot1_per" name = "a_rot1_per">
             <option value="1">1</option>
@@ -31,15 +31,14 @@
             <option value="3">3</option>
             <option value="4">4</option>
             <option value="5">5</option>
-        <label for="a_rot1_per">Izberite permutacijo</label>
         </select>
         <br>
-        <input type="radio" id="b_rot1" name="izberi_rotor1" value="b">
+        <input type="radio" id="b_rot1" name="izberi_rotor1" value="b_rot1">
         <label for="b_rot1">(b)</label><br>
-        <input type="radio" id="c_rot1" name="izberi_rotor1" value="c">
+        <input type="radio" id="c_rot1" name="izberi_rotor1" value="c_rot1">
         <label for="c_rot1">(c)</label><br>
         Če ste izbrali (c), napišite rotor v obliki [a<small>0</small>, ... , a<small>25</small>]:
-        <input type="text" id="izbira_rot1" name="rot1"><br>
+        <input type="text" id="doloci_rot1" name="doloci_rot1"><br>
         
         <br><br>
 
@@ -47,30 +46,30 @@
         <select id="rot1_poz" name="rot1_poz">
             <option value="1">0</option>
             <option value="2">1</option>
-            <option value="2">2</option>
-            <option value="2">3</option>
-            <option value="2">4</option>
-            <option value="2">5</option>
-            <option value="2">6</option>
-            <option value="2">7</option>
-            <option value="2">8</option>
-            <option value="2">9</option>
-            <option value="2">10</option>
-            <option value="2">11</option>
-            <option value="2">12</option>
-            <option value="2">13</option>
-            <option value="2">14</option>
-            <option value="2">15</option>
-            <option value="2">16</option>
-            <option value="2">17</option>
-            <option value="2">18</option>
-            <option value="2">19</option>
-            <option value="2">20</option>
-            <option value="2">21</option>
-            <option value="2">22</option>
-            <option value="2">23</option>
-            <option value="2">24</option>
-            <option value="2">25</option>
+            <option value="3">2</option>
+            <option value="4">3</option>
+            <option value="5">4</option>
+            <option value="6">5</option>
+            <option value="7">6</option>
+            <option value="8">7</option>
+            <option value="9">8</option>
+            <option value="10">9</option>
+            <option value="11">10</option>
+            <option value="12">11</option>
+            <option value="13">12</option>
+            <option value="14">13</option>
+            <option value="15">14</option>
+            <option value="16">15</option>
+            <option value="17">16</option>
+            <option value="18">17</option>
+            <option value="19">18</option>
+            <option value="20">19</option>
+            <option value="21">20</option>
+            <option value="22">21</option>
+            <option value="23">22</option>
+            <option value="24">23</option>
+            <option value="25">24</option>
+            <option value="26">25</option>
         </select>
 
         <br><br>
