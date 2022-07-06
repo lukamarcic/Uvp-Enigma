@@ -3,7 +3,7 @@
     Za kodiranje potrebujemo določiti začetno pozicijo naše enigme. <br><br>
     Izbran prvi rotor je: {{rot1}}
     <br><br>
-    prosim določite drugi rotor:<br> 
+    Prosim določite drugi rotor:<br> 
     Za rotor imamo na voljo 3 opcije:<br><br>
 
     (a): Uporabimo eno izmed petih v naprej določenih permutacij<br>

@@ -6,7 +6,7 @@
     <h2>Rotorji</h2>
     Nadaljno moramo določiti 3 rotorje in njihove začetne pozicije.<br>
     Rotor je permutacija 26 znakov, zapisana kot seznam številk 0 - 25, 
-    ki vsako črko(številko) spremeni v neko drugo številko.<br>
+    ki vsako črko (številko) spremeni v neko drugo številko.<br>
     Torej gre za permutacijo 26 elementov brez fiksnih točk.<br>
     Rotor lahko potem še poljubno obrnemo na eno izmed 26 pozicij (označeno z 0-25).<br>
     Za vsak rotor imamo na voljo 3 opcije:<br><br>

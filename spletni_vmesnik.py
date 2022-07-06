@@ -44,6 +44,8 @@ def izberi_zrc():
             if model.preveri_zrcalo(vnos_zrc_3):
                 zrcalo = vnos_zrc_3
                 return bottle.template('izberi_rot_1.tpl', zrc= zrcalo)
+            else:
+                return bottle.template('izberi_zrc.tpl')
         else:
             return bottle.template('izberi_zrc.tpl')
 
@@ -91,6 +93,8 @@ def izberi_rot_1():
             if model.preveri_rotor(vnos_rot_3):
                 rotor1 = model.Rotor(vnos_rot_3, poz)
                 return bottle.template('izberi_rot_2.tpl', rot1 = rotor1)
+            else:
+                return bottle.template('izberi_rot_1.tpl', zrc= zrcalo)
         else:
             return bottle.template('izberi_rot_1.tpl', zrc= zrcalo)
 
@@ -138,12 +142,15 @@ def izberi_rot_2():
             if model.preveri_rotor(vnos_rot_3):
                 rotor2 = model.Rotor(vnos_rot_3, poz)
                 return bottle.template('izberi_rot_3.tpl', rot2 = rotor2)
+            else:
+                return bottle.template('izberi_rot_2.tpl', rot1= rotor1)
         else:
             return bottle.template('izberi_rot_2.tpl', rot1= rotor1)
 
 #========================================================================================================
 @bottle.get('/izberi_rot_3/')
 def izberi_rot_3():
+    global rotor2
     try:
         izbira = bottle.request.query['izberi_rotor3']
     except KeyError:
@@ -185,6 +192,8 @@ def izberi_rot_3():
             if model.preveri_rotor(vnos_rot_3):
                 rotor3 = model.Rotor(vnos_rot_3, poz)
                 return bottle.template('izberi_pb.tpl', rot3 = rotor3)
+            else:
+                return bottle.template('izberi_rot_3.tpl', rot2 = rotor2)
         else:
             return bottle.template('izberi_rot_3.tpl', rot2 = rotor2)
 
@@ -214,6 +223,8 @@ def izberi_zrc():
             if model.preveri_plugboard(vnos_pb_3):
                 plugboard = vnos_pb_3
                 return bottle.template('vnos_besedila.tpl', pb= plugboard)
+            else:
+                return bottle.template('izberi_pb.tpl', rot3= rotor3)
         else:
             return bottle.template('izberi_pb.tpl', rot3= rotor3)
 

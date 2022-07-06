@@ -211,12 +211,12 @@ class Koda:
 # Šumnike spremeni v črke brez strešice. Ostale črke (npr ć, đ) izbriše
 # Za angleško abecedo importamo string
 def uredi_besedilo(tekst):
-    delno_urejen1 = tekst.lower().replace('č', 'c').replace('š', 's').replace('ž', 'z')
+    delno_urejen1 = tekst.lower().replace('č', 'c').replace('š', 's').replace('ž', 'z').replace('\n', ' ').replace('\t', ' ')
     delno_urejen2 = ''
     ang_abc = list(string.ascii_lowercase)
 
     for znak in delno_urejen1:
-        if znak in ang_abc or znak == ' ':
+        if znak in ang_abc or znak == ' ':  
             delno_urejen2 += znak
 
     urejen_tekst = ' '.join(delno_urejen2.split())
