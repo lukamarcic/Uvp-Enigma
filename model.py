@@ -216,7 +216,7 @@ def uredi_besedilo(tekst):
     ang_abc = list(string.ascii_lowercase)
 
     for znak in delno_urejen1:
-        if znak in ang_abc or znak == ' ':  
+        if znak in ang_abc or znak == ' ':
             delno_urejen2 += znak
 
     urejen_tekst = ' '.join(delno_urejen2.split())

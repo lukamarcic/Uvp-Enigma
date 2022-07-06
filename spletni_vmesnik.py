@@ -242,7 +242,7 @@ def izbira_besedila():
         return bottle.template('vnos_besedila.tpl', pb= plugboard)
     else:
         return bottle.template('kodiraj.tpl', rot1= rotor1, rot2= rotor2, rot3= rotor3,
-                                zrc= zrcalo, pb= plugboard, tekst= urejeno_besedilo)
+                                zrc= zrcalo, pb= plugboard, tekst= urejeno_besedilo, tekst2 = besedilo)
 
 #========================================================================================================
 @bottle.get('/kodiraj/')
