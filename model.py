@@ -275,3 +275,27 @@ def kodiraj_besedilo(besedilo, koda):
 # Za dekodiranje besedila uporabimo isto funkcijo
 # Kot opisano prej v opisu funkcije kodiraj_crko, je funkcija sam svoj inverz
 # Torej moramo le vstaviti kodirano besedilo pod istimi začetnimi pogoji (Kodo)
+
+sporocilo_skrajsano = (
+            'Enigma je bil kodirni stroj, ki so ga uporabljale nemške sile v času pred in med 2. svetovno vojno. '
+            'Če damo na stran mnoge zli namene, za katere se je stroj uporabljal, dobimo zanimiv način kodiranja iz časov, '
+            'ko te naloge še niso prevzeli računalniki s svojo sposobnostjo obratovanja z zelo velikimi številkami. '
+            'Stroj je deloval povsem mehanično. Ob pritisku tipke za posamezno črko, se je povezal električen krog. '
+            'Signal je potem potoval skozi stroj in prižgal luč pod črko, v katero se je prvotna črko kodirala. '
+            'Tako sta s strojem ponavadi obratovali 2 osebi: prva je tipkala besedilo, druga pa si je zapisovala črke, '
+            'pod katerimi se je prižgala luč. To je bilo potem kodirano besedilo. '
+            'Samo kodiranje deluje na nasleden način: '
+            'Ob pritisku tipke za posamezno črko je signal potoval najprej skozi plugboard. '
+            'Plugboard je bil sestavljen iz večih žic, s katerimi so poljubno povezali dve po dve črki. '
+            'Če je bila črka povezana z drugo črko, sta se zamenjali, ko je električni signal šel čez plugboard. '
+            'Ko je signal šel skozi plugboard (kjer se je morda zamenjal v signal druge črke) je šel skozi 3 rotorje. '
+            'V vsakem rotorju se je zamenjal v drugo črko. '
+            'Ko je prišel skozi vse 3, je šel skozi "zrcalo". '
+            'Tam so se paroma zamenjale črke. Pot je signal nadaljeval nazaj skozi 3 rotorje, kjer se je zamenjal še trikrat. '
+            'Za konec je signal šel še enkrat skozi plugboard, kjer se je morda spet zamenjal. '
+            'Posamezna črka se je tako zamenjala 7-krat do 9-krat. '
+            'Ko se je kodirala črka, so se rotorji obrnili: prvi rotor se je obrnil po vsaki črki, drugi po 25ih obratih '
+            'prvega, tretji pa po 25ih obratih drugega, s tem da je prvi obrat drugega ali tretjega lahko prvič prišel prej, '
+            'saj se rotorji v začetnem položaju lahko poljubno obrnejo. '
+            'Nemški koderji so imeli v naprej določen koledar, kdaj se uporablja katera koda.'
+            )
