@@ -232,7 +232,9 @@ def izberi_zrc():
 @bottle.get('/izbira_besedila/')
 def izbira_besedila():
     besedilo = bottle.request.query['vnos_besedila']
-    urejeno_besedilo = model.uredi_besedilo(besedilo)
+    besedilo2 = besedilo.replace('Ä', 'c').replace('Å¡', 's').replace('Å¾', 'z').replace('Å½', 'z').replace('Å', 's')
+
+    urejeno_besedilo = model.uredi_besedilo(besedilo2)
 
     global rotor1, rotor2, rotor3, plugboard, zrcalo, izbrana_koda, kodirano_besedilo
     izbrana_koda = model.Koda(rotor1, rotor2, rotor3, plugboard, zrcalo)
@@ -242,7 +244,7 @@ def izbira_besedila():
         return bottle.template('vnos_besedila.tpl', pb= plugboard)
     else:
         return bottle.template('kodiraj.tpl', rot1= rotor1, rot2= rotor2, rot3= rotor3,
-                                zrc= zrcalo, pb= plugboard, tekst= urejeno_besedilo, tekst2 = besedilo)
+                                zrc= zrcalo, pb= plugboard, tekst= urejeno_besedilo)
 
 #========================================================================================================
 @bottle.get('/kodiraj/')

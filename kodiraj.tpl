@@ -1,7 +1,5 @@
 % rebase('osnova.tpl')
 <p>
-
-    {{tekst2}}
     Izbrali ste naslednjo kodo:<br>
     Zrcalo: {{zrc}}<br>
     Rotor 1: {{rot1}}<br>
