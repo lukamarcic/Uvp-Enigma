@@ -1,6 +1,5 @@
 import bottle
 import model
-import tekstovni_vmesnik
 
 zrcalo = model.zrcalo
 plugboard = model.plugboard
@@ -11,7 +10,7 @@ rotor3 = model.Rotor(model.per1, 0)
 #========================================================================================================
 @bottle.get('/')
 def osnovni_zaslon():
-    return bottle.template('tpl_datoteke\osnovni_zaslon.tpl', sporocilo = tekstovni_vmesnik.sporocilo_skrajsano)
+    return bottle.template('tpl_datoteke\osnovni_zaslon.tpl', sporocilo = model.sporocilo_skrajsano)
 
 #========================================================================================================
 @bottle.get('/izberi/')
@@ -255,6 +254,6 @@ def kodiraj():
 #========================================================================================================
 @bottle.get('/nazaj/')
 def nazaj():
-    return bottle.template('tpl_datoteke\osnovni_zaslon.tpl', sporocilo = tekstovni_vmesnik.sporocilo_skrajsano)
+    return bottle.template('tpl_datoteke\osnovni_zaslon.tpl', sporocilo = model.sporocilo_skrajsano)
 
 bottle.run(debug=True, reloader=True)
